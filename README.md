@@ -1,200 +1,139 @@
-# tallerw
-# Distributed Drone Surveillance System
+# Tp_algoritmos3
+Juego de batalla de pokemones hecho en java.
+Para poder ejecutar el juego se debe descargar la carpeta "PokemonAlgo3" e importar la carpeta al IDE después de eso ejecutar el programa desde la clase MainFX.
+# 🎮 Pokemon Battle Game - Trabajo Práctico Algoritmos 3
 
-A distributed surveillance platform built in **Rust** that simulates an autonomous incident prevention network using **drones, surveillance cameras, and a message broker** based on the **publish–subscribe architecture**.
+Un simulador de batallas de Pokemon por turnos desarrollado en Java, que demuestra la implementación de principios SOLID y patrones de diseño avanzados en un sistema de combate completo.
 
-This project was developed as part of the **Taller de Programación** course at **FIUBA (University of Buenos Aires)**.
+## 📋 Descripción
 
-The system models how a city could coordinate multiple autonomous agents to detect and respond to public incidents in real time.
+Este proyecto es un juego de batallas Pokemon implementado como trabajo práctico para Algoritmos y Programación 3. El sistema permite batallas por turnos entre dos entrenadores, cada uno con un equipo de hasta 6 Pokemon. El juego incluye un sistema completo de tipos, habilidades, estados, objetos y cálculo de daño con efectividad de tipos.
 
-## Contributors
+### 🎯 Características Principales
 
-This project was developed as a team assignment by the following students:
+- **Sistema de Combate por Turnos**: Batallas estratégicas entre dos entrenadores
+- **Sistema de Tipos**: 15 tipos de Pokemon con tabla de efectividades (Fuego, Agua, Eléctrico, Planta, Hielo, Dragón, Siniestro, Psíquico, Lucha, Roca, Tierra, Volador, Bicho, Fantasma, Veneno, Normal)
+- **71 Habilidades**: Divididas en ataques, modificadores de estadísticas y efectos de estado
+- **6 Estados de Pokemon**: Normal, Paralizado, Dormido, Envenenado, Confundido, Debilitado
+- **14 Objetos**: Pociones, curas de estado, revivir, potenciadores de estadísticas
+- **Cálculo de Daño Complejo**: Incluye nivel, críticos, efectividad de tipo, STAB, y variación aleatoria
+- **Gestión de Equipos**: Cada entrenador maneja un equipo de 6 Pokemon
 
-- **Kevin Alberto Vallejo** — 109975  
-- **Mateo Ezequiel Ibañez** — 107983  
-- **Gonzalo Calderon** — 107143  
-- **Julian Mutchinick** — 99479  
----
+## 🛠️ Tecnologías Utilizadas
 
-<img width="488" height="622" alt="image" src="https://github.com/user-attachments/assets/42139b86-0b35-4e82-9e22-9022ff1fa655" />
+- **Lenguaje**: Java 17
+- **Gestor de Construcción**: Maven
+- **IDE Recomendado**: IntelliJ IDEA / Eclipse / NetBeans
+- **Paradigma**: Programación Orientada a Objetos
 
+## 🏗️ Patrones de Diseño Implementados
 
-# System Overview
+Este proyecto demuestra la implementación práctica de múltiples patrones de diseño:
 
-The platform simulates a **smart city surveillance network** composed of multiple distributed components communicating through a custom **asynchronous messaging service**.
+### Patrones Creacionales
+- **Builder** (`PokemonBuilder`): Construcción fluida de Pokemon con configuraciones personalizadas
+- **Factory** (`HabilidadesFactory`, `EstadisticaFactory`, `JugadaFactory`): Creación de habilidades, estadísticas y jugadas
 
-The architecture follows a **client–server model** with a **publish–subscribe communication pattern** similar to protocols like:
+### Patrones Estructurales
+- **Type Object** (jerarquía `Elemento`): Sistema de tipos con 15 elementos diferentes
 
-- MQTT
-- AMQP
+### Patrones de Comportamiento
+- **Strategy** (jerarquías `Estado` y `Habilidad`): Diferentes estrategias de ataque y manejo de estados
+- **State** (paquete `estado/`): Estados del Pokemon que afectan su comportamiento en batalla
+- **Command** (paquete `comando/`): Encapsulación de acciones de batalla como objetos
+- **Chain of Responsibility** (`Comando.concatComands()`): Encadenamiento de comandos
+- **Singleton** (`Eventos`, `Log`): Sistema de eventos y logging con instancia única
+- **Template Method** (`Estadisticas`): Esqueleto para cálculos de estadísticas
 
-A central **message broker server** coordinates communication between several independent applications.
+### Principios SOLID
+- **Single Responsibility**: Cada clase tiene una responsabilidad específica
+- **Open/Closed**: Extensible mediante herencia sin modificar clases base
+- **Liskov Substitution**: Las subclases pueden sustituir a sus clases base
+- **Interface Segregation**: Interfaces específicas en lugar de una interfaz general
+- **Dependency Inversion**: Dependencia de abstracciones, no de implementaciones concretas
 
-### Main components
+## 📁 Estructura del Proyecto
 
-- **Message Broker Server**
-    - Handles client connections
-    - Routes messages between publishers and subscribers
-    - Maintains sessions and message delivery guarantees
-- **Monitoring Application**
-    - Displays the state of the entire system
-    - Allows users to report incidents
-    - Visualizes drones, cameras, and active incidents on a map
-- **Drone Agent Software**
-    - Represents autonomous drones
-    - Receives incident notifications
-    - Moves toward incidents if conditions allow
-    - Reports position and status periodically
-- **Camera Control System**
-    - Manages surveillance cameras
-    - Switches between energy-saving and alert modes
-    - Can trigger incidents automatically
+```
+PokemonAlgo3/
+├── src/main/java/org/example/
+│   ├── pokemon/              # Entidad Pokemon y Builder
+│   ├── habilidad/            # Sistema de habilidades (Ataque, Modificadores, Estados)
+│   ├── estado/               # Estados del Pokemon (Normal, Paralizado, Dormido, etc.)
+│   ├── Elemento/             # Sistema de tipos (15 tipos elementales)
+│   ├── Estadistica/          # Modificadores de estadísticas
+│   ├── Estadisticas/         # Gestión y cálculo de estadísticas
+│   ├── items/                # Sistema de objetos (Pociones, Curas, Revivir)
+│   ├── comando/              # Implementación del patrón Command
+│   ├── Turno/                # Sistema de turnos y eventos
+│   ├── jugada/               # Mecánicas de juego (Atacar, Usar objeto, Cambiar, Rendirse)
+│   ├── pokebola/             # Gestión de equipo de Pokemon
+│   ├── Log/                  # Sistema de logging
+│   ├── Main.java             # Punto de entrada
+│   ├── Juego.java            # Gestor de batalla
+│   ├── Entrenador.java       # Entidad entrenador
+│   └── CalculadoraDanio.java # Motor de cálculo de daño
+└── pom.xml                   # Configuración Maven
+```
 
----
+**Estadísticas del Código:**
+- 85 archivos Java
+- ~3,400 líneas de código
+- 13 paquetes organizados por responsabilidad
 
-# Features
+## 🚀 Cómo Ejecutar el Juego
 
-### Asynchronous Messaging System
+### Prerrequisitos
+- Java JDK 17 o superior
+- Maven (opcional, si deseas construir desde línea de comandos)
+- IDE con soporte para Maven (IntelliJ IDEA, Eclipse, NetBeans)
 
-Custom implementation of a message broker supporting:
+### Pasos de Instalación
 
-- **Publish–Subscribe communication**
-- **Client sessions**
-- **Message persistence**
-- **At-least-once delivery (QoS)**
-- **Client reconnection with message recovery**
+1. **Clonar el repositorio**:
+   ```bash
+   git clone https://github.com/Kevin00404/Tp_algoritmos3.git
+   cd Tp_algoritmos3
+   ```
 
----
+2. **Importar el proyecto al IDE**:
+   - Abre tu IDE preferido
+   - Importa la carpeta `PokemonAlgo3` como un proyecto Maven
+   - Espera a que Maven descargue las dependencias (si las hubiera)
 
-### Distributed Autonomous Agents
+3. **Ejecutar el juego**:
+   - Navega a la clase `Main.java` en `src/main/java/org/example/`
+   - Ejecuta la clase Main
+   - Sigue las instrucciones en consola para jugar
 
-Drones operate independently and react to incidents based on:
-
-- Maximum operation range
-- Battery level
-- Incident proximity
-- Other drones already responding
-
----
-
-### Smart Camera Network
-
-Cameras dynamically adapt their behavior:
-
-- Energy-saving mode when idle
-- Alert mode when incidents occur nearby
-- Ability to trigger incidents through image processing
-
----
-
-### Incident Resolution Logic
-
-An incident is resolved when:
-
-- At least **two drones reach the incident location**
-- They remain there for a configurable amount of time
-
----
-
-# Architecture
-
-The system is composed of several independent Rust applications communicating through the messaging server.
-
-Each component runs independently and communicates using asynchronous messaging.
-
----
-
-# Technologies
-
-- **Rust (stable)**
-- **TCP networking**
-- **Multi-threading**
-- **Channels**
-- **Custom message broker**
-- **Unit and integration testing**
-
-Allowed crates used in the project:
-
-- `rand`
-- `chrono`
-
----
-
-# Running the Project
-
-## Start the Server
-
-From the root directory:
+### Ejecución desde Línea de Comandos
 
 ```bash
-cargo run --bin 0server <port>
+cd PokemonAlgo3
+mvn clean compile
+mvn exec:java -Dexec.mainClass="org.example.Main"
 ```
 
-Example:
+## 📊 Diagrama de Clases
 
-```
-cargo run--bin 0server5000
-```
+El diagrama de clases completo del proyecto está disponible en Lucidchart:
 
-Before running the server, ensure that the `resources` folder inside the `jetstream` directory is empty if it exists.
+🔗 [Ver Diagrama de Clases](https://lucid.app/lucidchart/11c2d205-9b2d-46e0-9a54-f8facff64de4/edit?viewport_loc=-3108%2C-1309%2C8000%2C3556%2C0_0&invitationId=inv_a28dd9fe-0638-464f-ba4a-3c049debfc31)
 
-## Monitoring System UI
+*Nota: Se requiere una cuenta en lucid.app para acceder al diagrama*
 
-Navigate to the monitoring application directory and run:
+## 🎓 Propósito Académico
 
-```
-cargo run
-```
+Este proyecto fue desarrollado como trabajo práctico para la materia Algoritmos y Programación 3, con el objetivo de:
+- Aplicar principios de diseño orientado a objetos
+- Implementar patrones de diseño de manera práctica
+- Desarrollar un sistema complejo y bien estructurado
+- Demostrar buenas prácticas de programación en Java
 
----
+## 📝 Licencia
 
-## Drone Agent UI
+Este proyecto está bajo la licencia especificada en el archivo [LICENSE](LICENSE).
 
-From the drone application directory:
+## 👥 Contribuciones
 
-```
-cargo run
-```
-
----
-
-## Camera Control System
-
-From the camera system directory:
-
-```
-cargo run
-```
-
----
-
-## Client
-
-To run a generic client:
-
-```
-cargo run-- <server_ip> <server_port>
-```
-
-Example:
-
-```
-cargo run--127.0.0.15000
-```
-
----
-
-# Testing
-
-The project includes both **unit tests** and **integration tests**.
-
-Mocks are used for some components (such as TCP streams and message clients) in order to isolate functionality during testing.
-
-To run tests:
-
-```
-cargo test
-```
-
-Tests can also be run from individual application directories.
+Este es un proyecto académico. Para consultas o sugerencias, por favor contacta al autor del repositorio.
