@@ -17,7 +17,7 @@ This project was developed as a team assignment by the following students:
 - **Julian Mutchinick** — 99479  
 ---
 
-<img width="788" height="622" alt="image" src="https://github.com/user-attachments/assets/42139b86-0b35-4e82-9e22-9022ff1fa655" />
+<img width="488" height="622" alt="image" src="https://github.com/user-attachments/assets/42139b86-0b35-4e82-9e22-9022ff1fa655" />
 
 
 # System Overview
